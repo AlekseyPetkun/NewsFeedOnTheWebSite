@@ -9,6 +9,8 @@ import com.example.newsFeedApp.entity.Feed;
 import com.example.newsFeedApp.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,12 +18,27 @@ import java.time.LocalDateTime;
 /**
  * Бизнес-логика по маппингу категорий (Category).
  */
-@Service
-@Slf4j
-@AllArgsConstructor
-public class CategoryMapping {
+@Mapper(componentModel = "spring")
+public interface CategoryMapping {
 
-    public CategoryDto mapToDto(Category entity) {
+    /**
+     * Преобразует сущность в дто
+     *
+     * @param entity сущность
+     * @return дто
+     */
+    CategoryDto map(Category entity);
+
+    /**
+     * Преобразует дто в сущность
+     *
+     * @param dto дто
+     * @return сущность
+     */
+    @InheritInverseConfiguration
+    Category map(CreateCategoryDto dto);
+
+    /*public CategoryDto mapToDto(Category entity) {
 
         CategoryDto dto = new CategoryDto();
 
@@ -38,5 +55,5 @@ public class CategoryMapping {
         entity.setNewsCategory(dto.getNewsCategory());
 
         return entity;
-    }
+    }*/
 }

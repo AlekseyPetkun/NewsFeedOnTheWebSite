@@ -8,15 +8,15 @@
 - Каждая категория содержит название, и к ней может быть привязано несколько новостей.
 - CRUD для новостей на сайте:
   
-  ![2023-06-27_22-09-29](https://github.com/Aleksey2710/ADS-online.app/assets/119398637/83d41ed9-010f-4f21-99e6-75598227df21)
+  ![2023-06-27_22-09-29](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/2023-08-13_00-25-23.png)
 
 - CRUD для категорий на сайте:
 
-  ![2023-06-27_22-09-29](https://github.com/Aleksey2710/ADS-online.app/assets/119398637/83d41ed9-010f-4f21-99e6-75598227df21)
+  ![2023-06-27_22-09-29](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/2023-08-13_00-25-51.png)
   
 - Реализованные схемы:
 
-  ![2023-06-27_22-09-29](https://github.com/Aleksey2710/ADS-online.app/assets/119398637/83d41ed9-010f-4f21-99e6-75598227df21)
+  ![2023-06-27_22-09-29](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/2023-08-13_00-26-29.png)
 
 ---
 
@@ -37,7 +37,7 @@ Mapstruct
 
   ## Структура базы данных: ##
   
-![2023-06-27_22-09-29](https://github.com/Aleksey2710/ADS-online.app/assets/119398637/83d41ed9-010f-4f21-99e6-75598227df21)
+![2023-06-27_22-09-29](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/2023-08-13_00-50-09.png)
 
 ##
 

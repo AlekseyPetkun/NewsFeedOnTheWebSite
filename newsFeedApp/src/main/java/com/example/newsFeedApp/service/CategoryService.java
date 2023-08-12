@@ -12,12 +12,12 @@ import java.util.List;
 public interface CategoryService {
 
     /**
-     * Создание категории по параметрам
+     * Создание новой категории
      *
-     * @param dto параметры новости
+     * @param category новая категория
      * @return созданная категория
      */
-    CategoryDto addCategory(CreateCategoryDto dto);
+    //CategoryDto addCategory(String category);
 
     /**
      * Изменить категорию по идентификатору

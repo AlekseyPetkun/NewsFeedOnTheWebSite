@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+
 /**
  * Сущность категория
  */
@@ -28,6 +30,14 @@ public class Category {
     /**
      * Название категории
      */
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(name = "news_category", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private NewsCategory newsCategory;
+
+    /**
+     * Новости категории
+     */
+    @OneToMany(fetch = FetchType.LAZY, //mappedBy = "Feed",
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<Feed> feeds;
 }

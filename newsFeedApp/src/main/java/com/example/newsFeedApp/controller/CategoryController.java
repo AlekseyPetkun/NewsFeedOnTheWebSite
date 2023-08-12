@@ -25,28 +25,6 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @PostMapping
-    @Operation(
-            summary = "Добавление новой категории",
-            description = "Нужно заполнить параметры для создания категории"
-    )
-
-    @ApiResponse(
-            responseCode = "200",
-            description = "Категория была добавлена"
-    )
-    @ApiResponse(
-            responseCode = "400",
-            description = "Категория не добавлена"
-    )
-    public CategoryDto addCategory(@RequestBody CreateCategoryDto dto) {
-
-        return categoryService.addCategory(dto);
-    }
-
-
-
-
     @PostMapping("/save_admin")
     @Operation(
             summary = "сохранение первой категории",
@@ -65,4 +43,27 @@ public class CategoryController {
 
         return categoryService.saveFirstCategory(newsCategory);
     }
+
+
+
+
+
+    /*@PostMapping
+    @Operation(
+            summary = "Добавление новой категории",
+            description = "Нужно заполнить параметры для создания категории"
+    )
+
+    @ApiResponse(
+            responseCode = "200",
+            description = "Категория была добавлена"
+    )
+    @ApiResponse(
+            responseCode = "400",
+            description = "Категория не добавлена"
+    )
+    public CategoryDto addCategory(@RequestParam(required = false) String category) {
+
+        return categoryService.addCategory(category);
+    }*/
 }

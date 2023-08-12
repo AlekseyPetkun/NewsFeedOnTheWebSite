@@ -1,7 +1,6 @@
 package com.example.newsFeedApp.repository;
 
 import com.example.newsFeedApp.entity.Feed;
-import com.example.newsFeedApp.entity.NewsCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

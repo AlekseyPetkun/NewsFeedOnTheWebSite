@@ -1,6 +1,5 @@
 package com.example.newsFeedApp.dto;
 
-import com.example.newsFeedApp.entity.NewsCategory;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -12,5 +11,5 @@ import lombok.RequiredArgsConstructor;
 public class CategoryDto {
 
     private long id; //идентификатор категории
-    private NewsCategory newsCategory; //категория
+    private String newsCategory; //категория
 }

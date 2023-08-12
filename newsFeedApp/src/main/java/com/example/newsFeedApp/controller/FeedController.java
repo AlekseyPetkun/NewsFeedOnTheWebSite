@@ -2,7 +2,6 @@ package com.example.newsFeedApp.controller;
 
 import com.example.newsFeedApp.dto.CreateFeedDto;
 import com.example.newsFeedApp.dto.FeedDto;
-import com.example.newsFeedApp.entity.NewsCategory;
 import com.example.newsFeedApp.service.FeedService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -43,6 +42,10 @@ public class FeedController {
                     @ApiResponse(
                             responseCode = "400",
                             description = "Новость не добавлена (Bad Request)"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Новость не добавлена (Not Found)"
                     )
             }
     )
@@ -139,7 +142,7 @@ public class FeedController {
                     )
             }
     )
-    public List<FeedDto> findByCategory(@RequestParam(required = false) NewsCategory newsCategory) {
+    public List<FeedDto> findByCategory(@RequestParam(required = false) String newsCategory) {
 
         return feedService.findByNewsCategory(newsCategory);
     }

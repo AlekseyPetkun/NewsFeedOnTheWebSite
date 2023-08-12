@@ -16,5 +16,5 @@ public class FeedDto {
     private String title; //название новости
     private String content; //содержание новости
     private LocalDateTime dateTime; //дата и время публикации
-    private long category; //идентификатор категории новости
+    private CategoryDto category; //идентификатор категории новости
 }

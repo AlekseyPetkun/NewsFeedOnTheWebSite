@@ -31,13 +31,12 @@ public class Category {
      * Название категории
      */
     @Column(name = "news_category", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private NewsCategory newsCategory;
+    private String newsCategory;
 
     /**
      * Новости категории
      */
-    @OneToMany(fetch = FetchType.LAZY, //mappedBy = "Feed",
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category",
             cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Feed> feeds;
 }

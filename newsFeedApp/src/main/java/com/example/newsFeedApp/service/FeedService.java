@@ -54,10 +54,10 @@ public interface FeedService {
     /**
      * Поиск новостей по названию (заголовку)
      *
-     * @param Title название новости (заголовок)
+     * @param title название новости (заголовок)
      * @return список новостей
      */
-    List<FeedDto> findByTitleFeed(String Title);
+    List<FeedDto> findByTitleFeed(String title);
 
     /**
      * Поиск новостей по содержанию

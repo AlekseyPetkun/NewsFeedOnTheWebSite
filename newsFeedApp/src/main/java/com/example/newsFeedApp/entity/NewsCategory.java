@@ -1,5 +1,7 @@
 package com.example.newsFeedApp.entity;
 
+import lombok.Data;
+
 /**
  * Категория новости
  */

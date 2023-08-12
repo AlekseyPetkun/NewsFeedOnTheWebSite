@@ -2,7 +2,6 @@ package com.example.newsFeedApp.service;
 
 import com.example.newsFeedApp.dto.CreateFeedDto;
 import com.example.newsFeedApp.dto.FeedDto;
-import com.example.newsFeedApp.entity.NewsCategory;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public interface FeedService {
      * @param newsCategory категория новости
      * @return список новостей
      */
-    List<FeedDto> findByNewsCategory(NewsCategory newsCategory);
+    List<FeedDto> findByNewsCategory(String newsCategory);
 
     /**
      * Поиск новостей по названию (заголовку)

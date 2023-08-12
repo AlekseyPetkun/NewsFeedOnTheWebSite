@@ -2,7 +2,6 @@ package com.example.newsFeedApp.service;
 
 import com.example.newsFeedApp.dto.CategoryDto;
 import com.example.newsFeedApp.dto.CreateCategoryDto;
-import com.example.newsFeedApp.entity.NewsCategory;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface CategoryService {
      * @param category новая категория
      * @return созданная категория
      */
-    //CategoryDto addCategory(String category);
+    CategoryDto addCategory(CreateCategoryDto dto);
 
     /**
      * Изменить категорию по идентификатору
@@ -42,12 +41,4 @@ public interface CategoryService {
      * @return список категорий
      */
     List<CategoryDto> getAllCategories();
-
-    /**
-     * Сохранение первой категорий в БД
-     *
-     * @param newsCategory первая категория
-     * @return сохраненная категория
-     */
-    CategoryDto saveFirstCategory(NewsCategory newsCategory);
 }

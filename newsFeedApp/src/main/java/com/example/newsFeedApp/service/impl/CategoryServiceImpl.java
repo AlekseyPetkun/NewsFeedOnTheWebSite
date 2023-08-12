@@ -2,10 +2,10 @@ package com.example.newsFeedApp.service.impl;
 
 import com.example.newsFeedApp.dto.CategoryDto;
 import com.example.newsFeedApp.dto.CreateCategoryDto;
+import com.example.newsFeedApp.dto.FeedDto;
 import com.example.newsFeedApp.entity.Category;
 import com.example.newsFeedApp.entity.Feed;
-import com.example.newsFeedApp.entity.NewsCategory;
-import com.example.newsFeedApp.exception.ValidationException;
+import com.example.newsFeedApp.exception.*;
 import com.example.newsFeedApp.mapper.CategoryMapping;
 import com.example.newsFeedApp.repository.CategoryRepository;
 import com.example.newsFeedApp.service.CategoryService;
@@ -26,49 +26,65 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapping categoryMapping;
     private final ValidationService validationService;
 
-    /*@Override
-    public CategoryDto addCategory(String category) {
+    @Override
+    public CategoryDto addCategory(CreateCategoryDto dto) {
 
-        CreateCategoryDto dto = new CreateCategoryDto(category);
+        String categoryUpperCase = dto.getNewsCategory().toUpperCase();
+        Category check = categoryRepository.findByNewsCategoryContainsIgnoreCase(categoryUpperCase);
+        if(check != null){
+            throw new EntityAlreadyExistsException(categoryUpperCase);
+        }
 
         if (!validationService.validate(dto)) {
             throw new ValidationException(dto.toString());
         }
 
-        Category entity = categoryMapping.mapToEntity(dto);
+        Category entity = categoryMapping.map(dto);
+        entity.setNewsCategory(categoryUpperCase);
         categoryRepository.save(entity);
 
-        return categoryMapping.mapToDto(entity);
-    }*/
+        return categoryMapping.map(entity);
+    }
 
     @Override
     public CategoryDto updateCategoryById(Long id, CreateCategoryDto dto) {
-        return null;
+
+        if (!validationService.validate(dto)) {
+            throw new ValidationException(dto.toString());
+        }
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFindCategoryException(id));
+
+        category.setNewsCategory(dto.getNewsCategory().toUpperCase());
+
+        categoryRepository.save(category);
+
+        return categoryMapping.map(category);
     }
 
     @Override
     public boolean deleteCategoryById(Long id) {
-        return false;
+
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFindCategoryException(id));
+
+        categoryRepository.delete(category);
+
+        return true;
     }
 
     @Override
     public List<CategoryDto> getAllCategories() {
-        return null;
-    }
 
-    @Override
-    public CategoryDto saveFirstCategory(NewsCategory newsCategory) {
+        List<CategoryDto> dtoList = categoryRepository
+                .findAll().stream()
+                .map(categoryMapping::map)
+                .toList();
 
-        CreateCategoryDto dto = new CreateCategoryDto(newsCategory);
-
-        if (!validationService.validate(dto)){
-            throw new ValidationException(dto.toString());
+        if(dtoList != null){
+            return dtoList;
+        } else {
+            throw new NotFindListException();
         }
-
-        Category entity = categoryMapping.mapToEntity(dto);
-
-        categoryRepository.save(entity);
-
-        return categoryMapping.mapToDto(entity);
     }
 }

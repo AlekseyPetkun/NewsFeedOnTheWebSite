@@ -48,7 +48,7 @@ public class Feed {
     /**
      * Категория новости
      */
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id")
     private Category category;
 }

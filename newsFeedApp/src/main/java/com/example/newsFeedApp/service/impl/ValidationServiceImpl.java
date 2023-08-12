@@ -1,5 +1,6 @@
 package com.example.newsFeedApp.service.impl;
 
+import com.example.newsFeedApp.dto.CreateCategoryDto;
 import com.example.newsFeedApp.dto.CreateFeedDto;
 import com.example.newsFeedApp.service.ValidationService;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class ValidationServiceImpl implements ValidationService {
             return ((CreateFeedDto) object).getTitle() != null
                     && ((CreateFeedDto) object).getContent() != null
                     && ((CreateFeedDto) object).getNewsCategory() != null;
+
+        } else if (object instanceof CreateCategoryDto) {
+            return ((CreateCategoryDto) object).getNewsCategory() != null;
         }
 
         return false;

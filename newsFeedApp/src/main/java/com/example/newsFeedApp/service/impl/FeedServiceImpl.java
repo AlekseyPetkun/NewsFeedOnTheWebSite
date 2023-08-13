@@ -3,6 +3,7 @@ package com.example.newsFeedApp.service.impl;
 import com.example.newsFeedApp.dto.CategoryDto;
 import com.example.newsFeedApp.dto.CreateFeedDto;
 import com.example.newsFeedApp.dto.FeedDto;
+import com.example.newsFeedApp.dto.UpdateFeedDto;
 import com.example.newsFeedApp.entity.Category;
 import com.example.newsFeedApp.entity.Feed;
 import com.example.newsFeedApp.exception.*;
@@ -38,7 +39,7 @@ public class FeedServiceImpl implements FeedService {
             throw new ValidationException(dto.toString());
         }
         Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(dto.getNewsCategory());
-        if(category == null){
+        if (category == null) {
             throw new NotFindNewsCategoryException(dto.getNewsCategory());
         }
         Feed entity = feedMapping.map(dto);
@@ -50,7 +51,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public FeedDto updateFeedById(Long id, CreateFeedDto dto) {
+    public FeedDto updateFeedById(Long id, UpdateFeedDto dto) {
 
         if (!validationService.validate(dto)) {
             throw new ValidationException(dto.toString());
@@ -59,11 +60,12 @@ public class FeedServiceImpl implements FeedService {
                 .orElseThrow(() -> new NotFindFeedException(id));
 
         Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(dto.getNewsCategory());
-        if(category == null){
+        if (category == null) {
             throw new NullPointerException();
         }
-        feed.setTitle(dto.getTitle());
-        feed.setContent(dto.getContent());
+        feedMapping.patch(dto, feed);
+        /*feed.setTitle(dto.getTitle());
+        feed.setContent(dto.getContent());*/
         feed.setCategory(category);
 
         feedRepository.save(feed);
@@ -90,7 +92,7 @@ public class FeedServiceImpl implements FeedService {
                 .map(feedMapping::map)
                 .toList();
 
-        if(dtoList != null){
+        if (dtoList != null) {
             return dtoList;
         } else {
             throw new NotFindListException();
@@ -101,7 +103,7 @@ public class FeedServiceImpl implements FeedService {
     public List<FeedDto> findByNewsCategory(String newsCategory) {
 
         Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(newsCategory);
-        if(category == null){
+        if (category == null) {
             throw new NullPointerException();
         }
 
@@ -111,7 +113,7 @@ public class FeedServiceImpl implements FeedService {
                 .map(feedMapping::map)
                 .toList();
 
-        if(dtoList != null){
+        if (dtoList != null) {
             return dtoList;
         } else {
             throw new NotFindListException();
@@ -126,7 +128,7 @@ public class FeedServiceImpl implements FeedService {
                 .map(feedMapping::map)
                 .toList();
 
-        if(dtoList != null){
+        if (dtoList != null) {
             return dtoList;
         } else {
             throw new NotFindListException();
@@ -141,7 +143,7 @@ public class FeedServiceImpl implements FeedService {
                 .map(feedMapping::map)
                 .toList();
 
-        if(dtoList != null){
+        if (dtoList != null) {
             return dtoList;
         } else {
             throw new NotFindListException();

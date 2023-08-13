@@ -2,6 +2,7 @@ package com.example.newsFeedApp.service;
 
 import com.example.newsFeedApp.dto.CreateFeedDto;
 import com.example.newsFeedApp.dto.FeedDto;
+import com.example.newsFeedApp.dto.UpdateFeedDto;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface FeedService {
      * @param dto изменяемые параметры новости
      * @return измененная новость
      */
-    FeedDto updateFeedById(Long id, CreateFeedDto dto);
+    FeedDto updateFeedById(Long id, UpdateFeedDto dto);
 
     /**
      * Удаление новости по идентификатору

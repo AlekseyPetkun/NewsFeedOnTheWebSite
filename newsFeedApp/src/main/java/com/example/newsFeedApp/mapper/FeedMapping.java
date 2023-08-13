@@ -3,15 +3,13 @@ package com.example.newsFeedApp.mapper;
 import ch.qos.logback.core.model.ComponentModel;
 import com.example.newsFeedApp.dto.CreateFeedDto;
 import com.example.newsFeedApp.dto.FeedDto;
+import com.example.newsFeedApp.dto.UpdateFeedDto;
 import com.example.newsFeedApp.entity.Category;
 import com.example.newsFeedApp.entity.Feed;
 import com.example.newsFeedApp.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
+import org.mapstruct.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,6 +26,7 @@ public interface FeedMapping {
      * @param entity сущность
      * @return дто
      */
+    @Mapping(source = "category.id", target = "category")
     FeedDto map(Feed entity);
 
     /**
@@ -38,6 +37,9 @@ public interface FeedMapping {
      */
     @InheritInverseConfiguration
     Feed map(CreateFeedDto dto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void patch(UpdateFeedDto dto, @MappingTarget Feed entity);
 
 
     /*private final CategoryRepository categoryRepository;

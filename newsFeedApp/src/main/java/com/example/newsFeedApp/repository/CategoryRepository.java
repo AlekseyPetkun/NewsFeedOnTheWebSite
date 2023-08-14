@@ -12,6 +12,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     /**
      * Поиск по названию категории
+     *
      * @param newsCategory категория
      * @return сущность
      */

@@ -38,7 +38,18 @@ public interface FeedMapping {
     @InheritInverseConfiguration
     Feed map(CreateFeedDto dto);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    /**
+     * Преобразует дто в сущность не изменяя поля на null
+     *
+     * @param dto    ДТО
+     * @param entity сущность
+     */
+    @Mapping(source = "title", target = "title",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "content", target = "content",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "newsCategory", target = "category.newsCategory",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void patch(UpdateFeedDto dto, @MappingTarget Feed entity);
 
 

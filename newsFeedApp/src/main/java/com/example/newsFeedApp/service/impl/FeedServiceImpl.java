@@ -14,6 +14,8 @@ import com.example.newsFeedApp.repository.FeedRepository;
 import com.example.newsFeedApp.service.FeedService;
 import com.example.newsFeedApp.service.ValidationService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -88,7 +90,8 @@ public class FeedServiceImpl implements FeedService {
     public List<FeedDto> getAllFeeds() {
 
         List<FeedDto> dtoList = feedRepository
-                .findAll().stream()
+                .findAll(PageRequest.of(0, 10, Sort.by("title")
+                        .ascending())).stream()
                 .map(feedMapping::map)
                 .toList();
 
@@ -109,7 +112,8 @@ public class FeedServiceImpl implements FeedService {
 
         CategoryDto dto = categoryMapping.map(category);
         List<FeedDto> dtoList = feedRepository
-                .findByCategoryId(dto.getId()).stream()
+                .findByCategoryId(dto.getId(), PageRequest.of(0, 10, Sort.by("title")
+                        .ascending())).stream()
                 .map(feedMapping::map)
                 .toList();
 
@@ -124,7 +128,8 @@ public class FeedServiceImpl implements FeedService {
     public List<FeedDto> findByTitleFeed(String title) {
 
         List<FeedDto> dtoList = feedRepository
-                .findByTitleContainingIgnoreCase(title).stream()
+                .findByTitleContainingIgnoreCase(title, PageRequest.of(0, 10, Sort.by("title")
+                        .ascending())).stream()
                 .map(feedMapping::map)
                 .toList();
 
@@ -139,7 +144,8 @@ public class FeedServiceImpl implements FeedService {
     public List<FeedDto> findByContentFeed(String content) {
 
         List<FeedDto> dtoList = feedRepository
-                .findByContentContainingIgnoreCase(content).stream()
+                .findByContentContainingIgnoreCase(content, PageRequest.of(0, 10, Sort.by("title")
+                        .ascending())).stream()
                 .map(feedMapping::map)
                 .toList();
 

@@ -32,6 +32,7 @@ PostgreSQL\
 Lombok\
 Maven\
 Liquibase\
+Docker\
 Mapstruct
 
 
@@ -43,6 +44,3 @@ Mapstruct
 
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?color=%2336BCF7&lines=thank+you+for+your+attention)](https://git.io/typing-svg)
 
-##
-
-  *Выполнил задание - [Алексей Петкун](https://github.com/AlekseyPetkun "AlekseyPetkun")*

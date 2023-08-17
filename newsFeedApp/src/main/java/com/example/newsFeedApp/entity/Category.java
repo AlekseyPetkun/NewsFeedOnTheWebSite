@@ -39,4 +39,7 @@ public class Category {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category",
             cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Feed> feeds;
+
+    public Category(long l, String technology) {
+    }
 }

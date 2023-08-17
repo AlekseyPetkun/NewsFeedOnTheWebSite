@@ -1,9 +1,6 @@
 package com.example.newsFeedApp.service.impl;
 
-import com.example.newsFeedApp.dto.CategoryDto;
-import com.example.newsFeedApp.dto.CreateFeedDto;
-import com.example.newsFeedApp.dto.FeedDto;
-import com.example.newsFeedApp.dto.UpdateFeedDto;
+import com.example.newsFeedApp.dto.*;
 import com.example.newsFeedApp.entity.Category;
 import com.example.newsFeedApp.entity.Feed;
 import com.example.newsFeedApp.exception.*;
@@ -15,6 +12,7 @@ import com.example.newsFeedApp.service.FeedService;
 import com.example.newsFeedApp.service.ValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +31,8 @@ public class FeedServiceImpl implements FeedService {
     private final FeedMapping feedMapping;
     private final CategoryMapping categoryMapping;
     private final ValidationService validationService;
+    private static final Pageable PAGEABLE = PageRequest.of(0, 10, Sort.by("title")
+            .ascending());
 
     @Override
     public FeedDto addFeed(CreateFeedDto dto) {
@@ -41,9 +41,8 @@ public class FeedServiceImpl implements FeedService {
             throw new ValidationException(dto.toString());
         }
         Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(dto.getNewsCategory());
-        if (category == null) {
-            throw new NotFindNewsCategoryException(dto.getNewsCategory());
-        }
+        checkCategory(dto.getNewsCategory(), category);
+
         Feed entity = feedMapping.map(dto);
         entity.setDateTime(LocalDateTime.now());
         entity.setCategory(category);
@@ -62,12 +61,10 @@ public class FeedServiceImpl implements FeedService {
                 .orElseThrow(() -> new NotFindFeedException(id));
 
         Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(dto.getNewsCategory());
-        if (category == null) {
-            throw new NullPointerException();
-        }
+        checkCategory(dto.getNewsCategory(), category);
+
         feedMapping.patch(dto, feed);
-        /*feed.setTitle(dto.getTitle());
-        feed.setContent(dto.getContent());*/
+
         feed.setCategory(category);
 
         feedRepository.save(feed);
@@ -87,72 +84,57 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public List<FeedDto> getAllFeeds() {
+    public ResponseWrapperFeeds getAllFeeds() {
 
         List<FeedDto> dtoList = feedRepository
-                .findAll(PageRequest.of(0, 10, Sort.by("title")
-                        .ascending())).stream()
+                .findAll(PAGEABLE).stream()
                 .map(feedMapping::map)
                 .toList();
 
-        if (dtoList != null) {
-            return dtoList;
-        } else {
-            throw new NotFindListException();
-        }
+        return new ResponseWrapperFeeds(dtoList.size(), dtoList);
     }
 
     @Override
-    public List<FeedDto> findByNewsCategory(String newsCategory) {
+    public ResponseWrapperFeeds findByNewsCategory(String newsCategory) {
 
         Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(newsCategory);
-        if (category == null) {
-            throw new NullPointerException();
-        }
+        checkCategory(newsCategory, category);
 
         CategoryDto dto = categoryMapping.map(category);
         List<FeedDto> dtoList = feedRepository
-                .findByCategoryId(dto.getId(), PageRequest.of(0, 10, Sort.by("title")
-                        .ascending())).stream()
+                .findByCategoryId(dto.getId(), PAGEABLE).stream()
                 .map(feedMapping::map)
                 .toList();
 
-        if (dtoList != null) {
-            return dtoList;
-        } else {
-            throw new NotFindListException();
-        }
+        return new ResponseWrapperFeeds(dtoList.size(), dtoList);
     }
 
     @Override
-    public List<FeedDto> findByTitleFeed(String title) {
+    public ResponseWrapperFeeds findByTitleFeed(String title) {
 
         List<FeedDto> dtoList = feedRepository
-                .findByTitleContainingIgnoreCase(title, PageRequest.of(0, 10, Sort.by("title")
-                        .ascending())).stream()
+                .findByTitleContainingIgnoreCase(title, PAGEABLE).stream()
                 .map(feedMapping::map)
                 .toList();
 
-        if (dtoList != null) {
-            return dtoList;
-        } else {
-            throw new NotFindListException();
-        }
+        return new ResponseWrapperFeeds(dtoList.size(), dtoList);
     }
 
     @Override
-    public List<FeedDto> findByContentFeed(String content) {
+    public ResponseWrapperFeeds findByContentFeed(String content) {
 
         List<FeedDto> dtoList = feedRepository
-                .findByContentContainingIgnoreCase(content, PageRequest.of(0, 10, Sort.by("title")
-                        .ascending())).stream()
+                .findByContentContainingIgnoreCase(content, PAGEABLE).stream()
                 .map(feedMapping::map)
                 .toList();
 
-        if (dtoList != null) {
-            return dtoList;
-        } else {
-            throw new NotFindListException();
+        return new ResponseWrapperFeeds(dtoList.size(), dtoList);
+    }
+
+    private void checkCategory(String newsCategory, Category category) {
+
+        if (category == null) {
+            throw new NotFindNewsCategoryException(newsCategory);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.newsFeedApp.controller;
 
 import com.example.newsFeedApp.dto.CreateFeedDto;
 import com.example.newsFeedApp.dto.FeedDto;
+import com.example.newsFeedApp.dto.ResponseWrapperFeeds;
 import com.example.newsFeedApp.dto.UpdateFeedDto;
 import com.example.newsFeedApp.service.FeedService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -113,7 +114,7 @@ public class FeedController {
                             description = "Получен список новостей (Ok)",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = FeedDto.class)
+                                    schema = @Schema(implementation = ResponseWrapperFeeds.class)
                             )
                     ),
                     @ApiResponse(
@@ -122,7 +123,7 @@ public class FeedController {
                     )
             }
     )
-    public List<FeedDto> getAllFeeds() {
+    public ResponseWrapperFeeds getAllFeeds() {
 
         return feedService.getAllFeeds();
     }
@@ -136,7 +137,7 @@ public class FeedController {
                             description = "Получен список новостей (Ok)",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = FeedDto.class)
+                                    schema = @Schema(implementation = ResponseWrapperFeeds.class)
                             )
                     ),
                     @ApiResponse(
@@ -145,7 +146,7 @@ public class FeedController {
                     )
             }
     )
-    public List<FeedDto> findByCategory(@RequestParam(required = false) String newsCategory) {
+    public ResponseWrapperFeeds findByCategory(@RequestParam(required = false) String newsCategory) {
 
         return feedService.findByNewsCategory(newsCategory);
     }
@@ -159,7 +160,7 @@ public class FeedController {
                             description = "Получен список новостей (Ok)",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = FeedDto.class)
+                                    schema = @Schema(implementation = ResponseWrapperFeeds.class)
                             )
                     ),
                     @ApiResponse(
@@ -168,7 +169,7 @@ public class FeedController {
                     )
             }
     )
-    public List<FeedDto> findByTitle(@RequestParam(required = false) String title) {
+    public ResponseWrapperFeeds findByTitle(@RequestParam(required = false) String title) {
 
         return feedService.findByTitleFeed(title);
     }
@@ -182,7 +183,7 @@ public class FeedController {
                             description = "Получен список новостей (Ok)",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = FeedDto.class)
+                                    schema = @Schema(implementation = ResponseWrapperFeeds.class)
                             )
                     ),
                     @ApiResponse(
@@ -191,7 +192,7 @@ public class FeedController {
                     )
             }
     )
-    public List<FeedDto> findByContent(@RequestParam(required = false) String content) {
+    public ResponseWrapperFeeds findByContent(@RequestParam(required = false) String content) {
 
         return feedService.findByContentFeed(content);
     }

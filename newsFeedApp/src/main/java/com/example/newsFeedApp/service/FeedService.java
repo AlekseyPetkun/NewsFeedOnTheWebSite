@@ -2,6 +2,7 @@ package com.example.newsFeedApp.service;
 
 import com.example.newsFeedApp.dto.CreateFeedDto;
 import com.example.newsFeedApp.dto.FeedDto;
+import com.example.newsFeedApp.dto.ResponseWrapperFeeds;
 import com.example.newsFeedApp.dto.UpdateFeedDto;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public interface FeedService {
      *
      * @return список новостей
      */
-    List<FeedDto> getAllFeeds();
+    ResponseWrapperFeeds getAllFeeds();
 
     /**
      * Поиск новостей по категории
@@ -49,7 +50,7 @@ public interface FeedService {
      * @param newsCategory категория новости
      * @return список новостей
      */
-    List<FeedDto> findByNewsCategory(String newsCategory);
+    ResponseWrapperFeeds findByNewsCategory(String newsCategory);
 
     /**
      * Поиск новостей по названию (заголовку)
@@ -57,7 +58,7 @@ public interface FeedService {
      * @param title название новости (заголовок)
      * @return список новостей
      */
-    List<FeedDto> findByTitleFeed(String title);
+    ResponseWrapperFeeds findByTitleFeed(String title);
 
     /**
      * Поиск новостей по содержанию
@@ -65,5 +66,5 @@ public interface FeedService {
      * @param content содержание новости
      * @return список новостей
      */
-    List<FeedDto> findByContentFeed(String content);
+    ResponseWrapperFeeds findByContentFeed(String content);
 }

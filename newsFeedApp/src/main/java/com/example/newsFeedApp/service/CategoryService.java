@@ -2,6 +2,7 @@ package com.example.newsFeedApp.service;
 
 import com.example.newsFeedApp.dto.CategoryDto;
 import com.example.newsFeedApp.dto.CreateCategoryDto;
+import com.example.newsFeedApp.dto.ResponseWrapperCategories;
 
 import java.util.List;
 
@@ -40,5 +41,5 @@ public interface CategoryService {
      *
      * @return список категорий
      */
-    List<CategoryDto> getAllCategories();
+    ResponseWrapperCategories getAllCategories();
 }

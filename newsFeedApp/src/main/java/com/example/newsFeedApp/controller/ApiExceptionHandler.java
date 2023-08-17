@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * Контроллер по работе с исключениями
+ * Функция Spring для обработки исключений
  */
 @RestControllerAdvice
 public class ApiExceptionHandler {

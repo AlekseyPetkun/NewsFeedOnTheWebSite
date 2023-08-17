@@ -1,9 +1,6 @@
 package com.example.newsFeedApp.controller;
 
-import com.example.newsFeedApp.dto.CategoryDto;
-import com.example.newsFeedApp.dto.CreateCategoryDto;
-import com.example.newsFeedApp.dto.CreateFeedDto;
-import com.example.newsFeedApp.dto.FeedDto;
+import com.example.newsFeedApp.dto.*;
 import com.example.newsFeedApp.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -112,7 +109,7 @@ public class CategoryController {
                             description = "Получен список категорий (Ok)",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CategoryDto.class)
+                                    schema = @Schema(implementation = ResponseWrapperCategories.class)
                             )
                     ),
                     @ApiResponse(
@@ -121,7 +118,7 @@ public class CategoryController {
                     )
             }
     )
-    public List<CategoryDto> getAllCategories() {
+    public ResponseWrapperCategories getAllCategories() {
 
         return categoryService.getAllCategories();
     }

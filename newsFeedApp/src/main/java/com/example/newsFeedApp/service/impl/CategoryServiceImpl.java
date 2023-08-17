@@ -1,8 +1,6 @@
 package com.example.newsFeedApp.service.impl;
 
-import com.example.newsFeedApp.dto.CategoryDto;
-import com.example.newsFeedApp.dto.CreateCategoryDto;
-import com.example.newsFeedApp.dto.FeedDto;
+import com.example.newsFeedApp.dto.*;
 import com.example.newsFeedApp.entity.Category;
 import com.example.newsFeedApp.entity.Feed;
 import com.example.newsFeedApp.exception.*;
@@ -11,6 +9,9 @@ import com.example.newsFeedApp.repository.CategoryRepository;
 import com.example.newsFeedApp.service.CategoryService;
 import com.example.newsFeedApp.service.ValidationService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapping categoryMapping;
     private final ValidationService validationService;
+    private static final Pageable PAGEABLE = PageRequest.of(0, 10, Sort.by("newsCategory")
+            .ascending());
 
     @Override
     public CategoryDto addCategory(CreateCategoryDto dto) {
@@ -74,17 +77,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> getAllCategories() {
+    public ResponseWrapperCategories getAllCategories() {
 
         List<CategoryDto> dtoList = categoryRepository
-                .findAll().stream()
+                .findAll(PAGEABLE).stream()
                 .map(categoryMapping::map)
                 .toList();
 
-        if(dtoList != null){
-            return dtoList;
-        } else {
-            throw new NotFindListException();
-        }
+        return new ResponseWrapperCategories(dtoList.size(), dtoList);
     }
 }

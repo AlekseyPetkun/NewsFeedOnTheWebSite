@@ -1,5 +1,6 @@
 package com.example.newsFeedApp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
  * DTO категории
  */
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Data
 public class CategoryDto {
 

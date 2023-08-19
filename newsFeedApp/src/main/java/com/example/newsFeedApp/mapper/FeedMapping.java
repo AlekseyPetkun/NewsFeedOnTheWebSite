@@ -26,7 +26,7 @@ public interface FeedMapping {
      * @param entity сущность
      * @return дто
      */
-    @Mapping(source = "category.id", target = "category")
+    //@Mapping(source = "category.id", target = "category")
     FeedDto map(Feed entity);
 
     /**

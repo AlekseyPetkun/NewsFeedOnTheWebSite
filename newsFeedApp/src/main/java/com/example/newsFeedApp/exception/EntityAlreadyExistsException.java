@@ -6,6 +6,7 @@ package com.example.newsFeedApp.exception;
 public class EntityAlreadyExistsException extends RuntimeException{
 
     private final String text;
+
     public EntityAlreadyExistsException(String text) {
         this.text = text;
     }

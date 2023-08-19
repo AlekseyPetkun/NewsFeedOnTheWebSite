@@ -33,9 +33,8 @@ public interface FeedService {
      * Удаление новости по идентификатору
      *
      * @param id идентификатор новости
-     * @return true or false
      */
-    boolean deleteFeedById(Long id);
+    void deleteFeedById(Long id);
 
     /**
      * Показать весь список новостей

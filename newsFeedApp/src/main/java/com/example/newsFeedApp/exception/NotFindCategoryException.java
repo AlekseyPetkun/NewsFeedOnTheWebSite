@@ -3,9 +3,10 @@ package com.example.newsFeedApp.exception;
 /**
  * Ошибка поиска категории
  */
-public class NotFindCategoryException extends RuntimeException{
+public class NotFindCategoryException extends NotFoundException{
 
     private final long id;
+
     public NotFindCategoryException(long id) {
         this.id = id;
     }

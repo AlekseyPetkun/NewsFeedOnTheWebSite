@@ -34,7 +34,7 @@ public interface CategoryService {
      * @param id идентификатор категории
      * @return true or false
      */
-    boolean deleteCategoryById(Long id);
+    void deleteCategoryById(Long id);
 
     /**
      * Показать весь список категорий

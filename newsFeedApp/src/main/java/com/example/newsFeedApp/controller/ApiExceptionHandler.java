@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * Контроллер по работе с исключениями
+ * Функция Spring для обработки исключений
  */
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -18,27 +18,12 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handlerNotFindFeedException(NotFindFeedException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<String> handlerNotFindListException(NotFindListException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<String> handlerNotFindCategoryException(NotFindCategoryException e) {
+    public ResponseEntity<String> handlerNotFoundException(NotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
     public ResponseEntity<String> handlerEntityAlreadyExistsException(EntityAlreadyExistsException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<String> handlerNotFindNewsCategoryException(NotFindNewsCategoryException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

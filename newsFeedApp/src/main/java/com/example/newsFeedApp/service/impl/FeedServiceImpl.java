@@ -40,15 +40,13 @@ public class FeedServiceImpl implements FeedService {
         if (!validationService.validate(dto)) {
             throw new ValidationException(dto.toString());
         }
-        Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(dto.getNewsCategory());
-        checkCategory(dto.getNewsCategory(), category);
+        Category category = findCategoryByNewsCategory(dto.getNewsCategory());
 
         Feed entity = feedMapping.map(dto);
         entity.setDateTime(LocalDateTime.now());
         entity.setCategory(category);
-        feedRepository.save(entity);
 
-        return feedMapping.map(entity);
+        return feedMapping.map(feedRepository.save(entity));
     }
 
     @Override
@@ -60,27 +58,22 @@ public class FeedServiceImpl implements FeedService {
         Feed feed = feedRepository.findById(id)
                 .orElseThrow(() -> new NotFindFeedException(id));
 
-        Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(dto.getNewsCategory());
-        checkCategory(dto.getNewsCategory(), category);
+        Category category = findCategoryByNewsCategory(dto.getNewsCategory());
 
         feedMapping.patch(dto, feed);
 
         feed.setCategory(category);
 
-        feedRepository.save(feed);
-
-        return feedMapping.map(feed);
+        return feedMapping.map(feedRepository.save(feed));
     }
 
     @Override
-    public boolean deleteFeedById(Long id) {
+    public void deleteFeedById(Long id) {
 
         Feed feed = feedRepository.findById(id)
                 .orElseThrow(() -> new NotFindFeedException(id));
 
         feedRepository.delete(feed);
-
-        return true;
     }
 
     @Override
@@ -97,8 +90,7 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public ResponseWrapperFeeds findByNewsCategory(String newsCategory) {
 
-        Category category = categoryRepository.findByNewsCategoryContainsIgnoreCase(newsCategory);
-        checkCategory(newsCategory, category);
+        Category category = findCategoryByNewsCategory(newsCategory);
 
         CategoryDto dto = categoryMapping.map(category);
         List<FeedDto> dtoList = feedRepository
@@ -136,5 +128,14 @@ public class FeedServiceImpl implements FeedService {
         if (category == null) {
             throw new NotFindNewsCategoryException(newsCategory);
         }
+    }
+
+    private Category findCategoryByNewsCategory(String newsCategory) {
+
+        Category entity = categoryRepository
+                .findByNewsCategoryContainsIgnoreCase(newsCategory);
+        checkCategory(newsCategory, entity);
+
+        return entity;
     }
 }

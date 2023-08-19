@@ -45,11 +45,13 @@ public class FeedController {
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Новость не добавлена (Bad Request)"
+                            description = "Новость не добавлена, " +
+                                    "т.к. не прошла валидацию (Bad Request)"
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Новость не добавлена (Not Found)"
+                            description = "Новость не добавлена, " +
+                                    "т.к. категория указана неверно (Not Found)"
                     )
             }
     )
@@ -72,16 +74,18 @@ public class FeedController {
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Информация не обновилась (Bad Request)"
+                            description = "Информация не обновилась, " +
+                                    "т.к. не прошла валидацию (Bad Request)"
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Информация не обновилась (Not Found)"
+                            description = "Информация не обновилась, " +
+                                    "т.к. новость не найдена (Not Found)"
                     )
             }
     )
     public FeedDto updateFeed(@PathVariable("id") Long id,
-                              @RequestBody @Valid UpdateFeedDto dto) {
+                              @RequestBody UpdateFeedDto dto) {
 
         return feedService.updateFeedById(id, dto);
     }
@@ -96,13 +100,14 @@ public class FeedController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Новость не удалена (Not Found)"
+                            description = "Новость не удалена, " +
+                                    "т.к. новость не найдена (Not Found)"
                     )
             }
     )
-    public boolean removeFeedById(@PathVariable("id") Long id) {
+    public void removeFeedById(@PathVariable("id") Long id) {
 
-        return feedService.deleteFeedById(id);
+        feedService.deleteFeedById(id);
     }
 
     @GetMapping
@@ -127,7 +132,6 @@ public class FeedController {
 
         return feedService.getAllFeeds();
     }
-
     @GetMapping("/found_feeds/by_categories")
     @Operation(
             summary = "Поиск новостей по категории",

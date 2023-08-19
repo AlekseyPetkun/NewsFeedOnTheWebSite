@@ -33,10 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto addCategory(CreateCategoryDto dto) {
 
         String categoryUpperCase = dto.getNewsCategory().toUpperCase();
-        Category check = categoryRepository.findByNewsCategoryContainsIgnoreCase(categoryUpperCase);
-        if(check != null){
-            throw new EntityAlreadyExistsException(categoryUpperCase);
-        }
+        findCategoryByNewsCategory(categoryUpperCase);
 
         if (!validationService.validate(dto)) {
             throw new ValidationException(dto.toString());
@@ -44,9 +41,8 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category entity = categoryMapping.map(dto);
         entity.setNewsCategory(categoryUpperCase);
-        categoryRepository.save(entity);
 
-        return categoryMapping.map(entity);
+        return categoryMapping.map(categoryRepository.save(entity));
     }
 
     @Override
@@ -60,20 +56,16 @@ public class CategoryServiceImpl implements CategoryService {
 
         category.setNewsCategory(dto.getNewsCategory().toUpperCase());
 
-        categoryRepository.save(category);
-
-        return categoryMapping.map(category);
+        return categoryMapping.map(categoryRepository.save(category));
     }
 
     @Override
-    public boolean deleteCategoryById(Long id) {
+    public void deleteCategoryById(Long id) {
 
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFindCategoryException(id));
 
         categoryRepository.delete(category);
-
-        return true;
     }
 
     @Override
@@ -85,5 +77,19 @@ public class CategoryServiceImpl implements CategoryService {
                 .toList();
 
         return new ResponseWrapperCategories(dtoList.size(), dtoList);
+    }
+
+    private void checkCategory(String newsCategory, Category category) {
+
+        if (category != null) {
+            throw new EntityAlreadyExistsException(newsCategory);
+        }
+    }
+
+    private void findCategoryByNewsCategory(String newsCategory) {
+
+        Category entity = categoryRepository
+                .findByNewsCategoryContainsIgnoreCase(newsCategory);
+        checkCategory(newsCategory, entity);
     }
 }

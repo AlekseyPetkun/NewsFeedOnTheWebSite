@@ -40,11 +40,13 @@ public class CategoryController {
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Категория не добавлена (Bad Request)"
+                            description = "Категория не добавлена, " +
+                                    "т.к. не прошла валидацию (Bad Request)"
                     ),
                     @ApiResponse(
                             responseCode = "406",
-                            description = "Категория не добавлена (Not Acceptable)"
+                            description = "Категория не добавлена, " +
+                                    "т.к. категория уже существует (Not Acceptable)"
                     )
             }
     )
@@ -67,16 +69,18 @@ public class CategoryController {
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Информация не обновилась (Bad Request)"
+                            description = "Информация не обновилась, " +
+                                    "т.к. не прошла валидацию (Bad Request)"
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Информация не обновилась (Not Found)"
+                            description = "Информация не обновилась, " +
+                                    "т.к. категория не найдена (Not Found)"
                     )
             }
     )
     public CategoryDto updateCategory(@PathVariable("id") Long id,
-                              @RequestBody CreateCategoryDto dto) {
+                                      @RequestBody CreateCategoryDto dto) {
 
         return categoryService.updateCategoryById(id, dto);
     }
@@ -91,13 +95,14 @@ public class CategoryController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Категория не удалена (Not Found)"
+                            description = "Категория не удалена, " +
+                                    "т.к. категория не найдена (Not Found)"
                     )
             }
     )
-    public boolean removeCategoryById(@PathVariable("id") Long id) {
+    public void removeCategoryById(@PathVariable("id") Long id) {
 
-        return categoryService.deleteCategoryById(id);
+        categoryService.deleteCategoryById(id);
     }
 
     @GetMapping

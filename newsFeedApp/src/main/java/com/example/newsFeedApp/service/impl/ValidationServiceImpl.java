@@ -17,14 +17,19 @@ public class ValidationServiceImpl implements ValidationService {
 
         if (object instanceof CreateFeedDto) {
             return ((CreateFeedDto) object).getTitle() != null
+                    && !((CreateFeedDto) object).getTitle().isEmpty()
                     && ((CreateFeedDto) object).getContent() != null
-                    && ((CreateFeedDto) object).getNewsCategory() != null;
+                    && !((CreateFeedDto) object).getContent().isEmpty()
+                    && ((CreateFeedDto) object).getNewsCategory() != null
+                    && !((CreateFeedDto) object).getNewsCategory().isEmpty();
 
         } else if (object instanceof CreateCategoryDto) {
-            return ((CreateCategoryDto) object).getNewsCategory() != null;
+            return ((CreateCategoryDto) object).getNewsCategory() != null
+                    && !((CreateCategoryDto) object).getNewsCategory().isEmpty();
 
         } else if (object instanceof UpdateFeedDto) {
-            return ((UpdateFeedDto) object).getNewsCategory() != null;
+            return ((UpdateFeedDto) object).getNewsCategory() != null
+                    && !((UpdateFeedDto) object).getNewsCategory().isEmpty();
         }
 
         return false;

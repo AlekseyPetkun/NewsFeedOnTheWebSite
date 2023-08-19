@@ -32,12 +32,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto addCategory(CreateCategoryDto dto) {
 
+        checkValidate(dto);
+
         String categoryUpperCase = dto.getNewsCategory().toUpperCase();
         findCategoryByNewsCategory(categoryUpperCase);
-
-        if (!validationService.validate(dto)) {
-            throw new ValidationException(dto.toString());
-        }
 
         Category entity = categoryMapping.map(dto);
         entity.setNewsCategory(categoryUpperCase);
@@ -48,9 +46,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto updateCategoryById(Long id, CreateCategoryDto dto) {
 
-        if (!validationService.validate(dto)) {
-            throw new ValidationException(dto.toString());
-        }
+        checkValidate(dto);
+
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFindCategoryException(id));
 
@@ -91,5 +88,12 @@ public class CategoryServiceImpl implements CategoryService {
         Category entity = categoryRepository
                 .findByNewsCategoryContainsIgnoreCase(newsCategory);
         checkCategory(newsCategory, entity);
+    }
+
+    private void checkValidate(Object object) {
+
+        if (!validationService.validate(object)) {
+            throw new ValidationException(object.toString());
+        }
     }
 }

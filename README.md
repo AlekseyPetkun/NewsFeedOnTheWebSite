@@ -16,7 +16,7 @@
   
 - Реализованные схемы:
 
-  ![2023-06-27_22-09-29](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/2023-08-13_14-18-19.png)
+  ![2023-06-27_22-09-29](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/2023-08-19_19-27-02.png)
 
   ![2023-06-27_22-09-29](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/2023-08-17_11-47-14.png)
 

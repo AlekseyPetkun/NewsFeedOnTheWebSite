@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Бизнес-логика по работе с новостями
@@ -37,13 +38,15 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public FeedDto addFeed(CreateFeedDto dto) {
 
-        if (!validationService.validate(dto)) {
-            throw new ValidationException(dto.toString());
-        }
+        checkValidate(dto);
+
+        TimeZone timeZone = TimeZone.getDefault();
+        LocalDateTime localDateTime = LocalDateTime.now(timeZone.toZoneId());
+
         Category category = findCategoryByNewsCategory(dto.getNewsCategory());
 
         Feed entity = feedMapping.map(dto);
-        entity.setDateTime(LocalDateTime.now());
+        entity.setDateTime(localDateTime);
         entity.setCategory(category);
 
         return feedMapping.map(feedRepository.save(entity));
@@ -52,9 +55,8 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public FeedDto updateFeedById(Long id, UpdateFeedDto dto) {
 
-        if (!validationService.validate(dto)) {
-            throw new ValidationException(dto.toString());
-        }
+        checkValidate(dto);
+
         Feed feed = feedRepository.findById(id)
                 .orElseThrow(() -> new NotFindFeedException(id));
 
@@ -137,5 +139,12 @@ public class FeedServiceImpl implements FeedService {
         checkCategory(newsCategory, entity);
 
         return entity;
+    }
+
+    private void checkValidate(Object object) {
+
+        if (!validationService.validate(object)) {
+            throw new ValidationException(object.toString());
+        }
     }
 }

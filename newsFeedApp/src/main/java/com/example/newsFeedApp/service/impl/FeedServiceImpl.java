@@ -11,6 +11,7 @@ import com.example.newsFeedApp.repository.FeedRepository;
 import com.example.newsFeedApp.service.FeedService;
 import com.example.newsFeedApp.service.ValidationService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -81,12 +82,13 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public ResponseWrapperFeeds getAllFeeds() {
 
+        Page<Feed> result = feedRepository.findAll(PAGEABLE);
         List<FeedDto> dtoList = feedRepository
                 .findAll(PAGEABLE).stream()
                 .map(feedMapping::map)
                 .toList();
 
-        return new ResponseWrapperFeeds(dtoList.size(), dtoList);
+        return new ResponseWrapperFeeds(result.getTotalElements(), dtoList);
     }
 
     @Override
@@ -95,34 +97,38 @@ public class FeedServiceImpl implements FeedService {
         Category category = findCategoryByNewsCategory(newsCategory);
 
         CategoryDto dto = categoryMapping.map(category);
+
+        Page<Feed> result = feedRepository.findAll(PAGEABLE);
         List<FeedDto> dtoList = feedRepository
                 .findByCategoryId(dto.getId(), PAGEABLE).stream()
                 .map(feedMapping::map)
                 .toList();
 
-        return new ResponseWrapperFeeds(dtoList.size(), dtoList);
+        return new ResponseWrapperFeeds(result.getTotalElements(), dtoList);
     }
 
     @Override
     public ResponseWrapperFeeds findByTitleFeed(String title) {
 
+        Page<Feed> result = feedRepository.findAll(PAGEABLE);
         List<FeedDto> dtoList = feedRepository
                 .findByTitleContainingIgnoreCase(title, PAGEABLE).stream()
                 .map(feedMapping::map)
                 .toList();
 
-        return new ResponseWrapperFeeds(dtoList.size(), dtoList);
+        return new ResponseWrapperFeeds(result.getTotalElements(), dtoList);
     }
 
     @Override
     public ResponseWrapperFeeds findByContentFeed(String content) {
 
+        Page<Feed> result = feedRepository.findAll(PAGEABLE);
         List<FeedDto> dtoList = feedRepository
                 .findByContentContainingIgnoreCase(content, PAGEABLE).stream()
                 .map(feedMapping::map)
                 .toList();
 
-        return new ResponseWrapperFeeds(dtoList.size(), dtoList);
+        return new ResponseWrapperFeeds(result.getTotalElements(), dtoList);
     }
 
     private void checkCategory(String newsCategory, Category category) {

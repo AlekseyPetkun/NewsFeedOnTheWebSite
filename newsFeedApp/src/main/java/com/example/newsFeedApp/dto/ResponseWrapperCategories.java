@@ -14,6 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ResponseWrapperCategories {
 
-    private Integer count; // общее количество категорий
+    private Long count; // общее количество категорий
     private List<CategoryDto> results; // все категории
 }

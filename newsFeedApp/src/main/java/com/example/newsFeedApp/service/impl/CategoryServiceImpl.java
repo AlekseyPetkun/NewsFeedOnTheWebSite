@@ -9,6 +9,7 @@ import com.example.newsFeedApp.repository.CategoryRepository;
 import com.example.newsFeedApp.service.CategoryService;
 import com.example.newsFeedApp.service.ValidationService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -68,12 +69,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ResponseWrapperCategories getAllCategories() {
 
+        Page<Category> result = categoryRepository.findAll(PAGEABLE);
         List<CategoryDto> dtoList = categoryRepository
                 .findAll(PAGEABLE).stream()
                 .map(categoryMapping::map)
                 .toList();
 
-        return new ResponseWrapperCategories(dtoList.size(), dtoList);
+        return new ResponseWrapperCategories(result.getTotalElements(), dtoList);
     }
 
     private void checkCategory(String newsCategory, Category category) {

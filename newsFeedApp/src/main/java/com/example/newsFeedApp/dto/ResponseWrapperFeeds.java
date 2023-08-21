@@ -15,6 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ResponseWrapperFeeds {
 
-    private Integer count; // общее количество новостей
+    private Long count; // общее количество новостей
     private List<FeedDto> results; // все найденные новости
 }

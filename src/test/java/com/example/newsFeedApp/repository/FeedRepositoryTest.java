@@ -30,7 +30,6 @@ import static org.mockito.Mockito.when;
 @DataJpaTest
 class FeedRepositoryTest {
 
-
     @Autowired
     private TestEntityManager entityManager;
 
@@ -265,6 +264,4 @@ class FeedRepositoryTest {
                 .ascending()));
         assertEquals(28, result.getTotalElements());
     }
-
-
 }

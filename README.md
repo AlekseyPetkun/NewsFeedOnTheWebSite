@@ -24,7 +24,7 @@
 
  ## Спецификация OpenAPI для описания API ##
   
-[OpenAPI specification](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/newsFeedApp/openapi.yaml "OpenAPI")
+[OpenAPI specification](https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/openapi.yaml "OpenAPI")
 
  ## Использован следующий стек технологий: ##
   

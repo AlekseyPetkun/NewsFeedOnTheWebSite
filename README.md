@@ -22,18 +22,22 @@
 
 ---
 
+ ## Спецификация OpenAPI для описания API ##
+  
+(https://github.com/AlekseyPetkun/NewsFeedOnTheWebSite/blob/master/newsFeedApp/openapi.yaml)
+
  ## Использован следующий стек технологий: ##
   
 Java17\
 SpringBoot\
-Swagger\
 Hibernate\
 PostgreSQL\
 Lombok\
 Maven\
 Liquibase\
 Docker\
-Mapstruct
+Mapstruct\
+OpenAPI
 
 
   ## Структура базы данных: ##

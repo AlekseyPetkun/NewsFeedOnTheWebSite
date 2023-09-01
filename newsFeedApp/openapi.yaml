@@ -1,0 +1,369 @@
+openapi: 3.0.3
+info:
+  version: '1.0'
+  title: NewsFeedApp
+  description: Веб-приложение по управлению новостной лентой на сайте
+servers:
+  - url: http://localhost:8072
+    description: Generated server url
+tags:
+  - name: API по работе с новостями
+    description: CRUD-операции для работы с новостями
+  - name: API по работе с категориями
+    description: CRUD-операции для работы с категориями
+paths:
+  /api/feeds:
+    get:
+      tags:
+        - API по работе с новостями
+      summary: Получить все сохраненные новости
+      operationId: getAllFeeds
+      responses:
+        "200":
+          description: Получен список новостей (Ok)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperFeeds'
+        "404":
+          description: Список новостей не получен (Not Found)
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperFeeds'
+    post:
+      tags:
+        - API по работе с новостями
+      summary: Добавление новой новости
+      description: Нужно заполнить параметры для создания новости
+      operationId: addFeed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFeedDto'
+        required: true
+      responses:
+        "201":
+          description: Новость была добавлена (Created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedDto'
+        "400":
+          description: "Новость не добавлена, т.к. не прошла валидацию (Bad Request)"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FeedDto'
+        "404":
+          description: "Новость не добавлена, т.к. категория указана неверно (Not\
+            \ Found)"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FeedDto'
+  /api/categories:
+    get:
+      tags:
+        - API по работе с категориями
+      summary: Получить все сохраненные категории
+      operationId: getAllCategories
+      responses:
+        "200":
+          description: Получен список категорий (Ok)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperCategories'
+        "404":
+          description: Список категорий не получен (Not Found)
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperCategories'
+    post:
+      tags:
+        - API по работе с категориями
+      summary: Добавление новой категории
+      description: Нужно заполнить параметры для создания категории
+      operationId: addCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCategoryDto'
+        required: true
+      responses:
+        "201":
+          description: Категория была добавлена (Created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDto'
+        "400":
+          description: "Категория не добавлена, т.к. не прошла валидацию (Bad Request)"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CategoryDto'
+        "406":
+          description: "Категория не добавлена, т.к. категория уже существует (Not\
+            \ Acceptable)"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CategoryDto'
+  /api/feeds/{id}:
+    delete:
+      tags:
+        - API по работе с новостями
+      summary: Удалить новость
+      operationId: removeFeedById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: Новость удалена (No Content)
+        "404":
+          description: "Новость не удалена, т.к. новость не найдена (Not Found)"
+    patch:
+      tags:
+        - API по работе с новостями
+      summary: Обновить информацию о новости
+      operationId: updateFeed
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFeedDto'
+        required: true
+      responses:
+        "200":
+          description: Информация успешно обновилась (Ok)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedDto'
+        "400":
+          description: "Информация не обновилась, т.к. не прошла валидацию (Bad Request)"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FeedDto'
+        "404":
+          description: "Информация не обновилась, т.к. новость не найдена (Not Found)"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FeedDto'
+  /api/categories/{id}:
+    delete:
+      tags:
+        - API по работе с категориями
+      summary: Удалить категорию
+      operationId: removeCategoryById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: Категория удалена (No Content)
+        "404":
+          description: "Категория не удалена, т.к. категория не найдена (Not Found)"
+    patch:
+      tags:
+        - API по работе с категориями
+      summary: Обновить информацию о категории
+      operationId: updateCategory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCategoryDto'
+        required: true
+      responses:
+        "200":
+          description: Информация успешно обновилась (Ok)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDto'
+        "400":
+          description: "Информация не обновилась, т.к. не прошла валидацию (Bad Request)"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CategoryDto'
+        "404":
+          description: "Информация не обновилась, т.к. категория не найдена (Not Found)"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CategoryDto'
+  /api/feeds/found_feeds/by_title:
+    get:
+      tags:
+        - API по работе с новостями
+      summary: Поиск новостей по названию
+      operationId: findByTitle
+      parameters:
+        - name: title
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Получен список новостей (Ok)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperFeeds'
+        "404":
+          description: Список новостей не получен (Not Found)
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperFeeds'
+  /api/feeds/found_feeds/by_content:
+    get:
+      tags:
+        - API по работе с новостями
+      summary: Поиск новостей по содержанию
+      operationId: findByContent
+      parameters:
+        - name: content
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Получен список новостей (Ok)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperFeeds'
+        "404":
+          description: Список новостей не получен (Not Found)
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperFeeds'
+  /api/feeds/found_feeds/by_categories:
+    get:
+      tags:
+        - API по работе с новостями
+      summary: Поиск новостей по категории
+      operationId: findByCategory
+      parameters:
+        - name: newsCategory
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Получен список новостей (Ok)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperFeeds'
+        "404":
+          description: Список новостей не получен (Not Found)
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseWrapperFeeds'
+components:
+  schemas:
+    CategoryDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        newsCategory:
+          type: string
+    FeedDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        content:
+          type: string
+        dateTime:
+          type: string
+          format: date-time
+        category:
+          $ref: '#/components/schemas/CategoryDto'
+    CreateFeedDto:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        newsCategory:
+          type: string
+    CreateCategoryDto:
+      type: object
+      properties:
+        newsCategory:
+          type: string
+    UpdateFeedDto:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        newsCategory:
+          type: string
+    ResponseWrapperFeeds:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeedDto'
+    ResponseWrapperCategories:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDto'
